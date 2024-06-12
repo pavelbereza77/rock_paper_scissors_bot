@@ -3,6 +3,7 @@ import logging
 
 from aiogram import Bot, Dispatcher
 from config_data.config import Config, load_config
+from config_data.set_menu import set_main_menu
 from handlers import other_handlers, user_handlers
 
 from aiogram.enums import ParseMode
@@ -30,10 +31,13 @@ async def main():
     bot = Bot(token=config.tg_bot.token, default=DefaultBotProperties(parse_mode='HTML'))
     dp = Dispatcher()
 
+
     # Регистриуем роутеры в диспетчере
     dp.include_router(user_handlers.router)
     dp.include_router(other_handlers.router)
 
+    # Настраиваем кнопку Menu
+    await set_main_menu(bot)
     # Пропускаем накопившиеся апдейты и запускаем polling
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)
