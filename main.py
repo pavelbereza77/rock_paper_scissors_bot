@@ -4,7 +4,7 @@ import logging
 from aiogram import Bot, Dispatcher
 from config_data.config import Config, load_config
 from config_data.set_menu import set_main_menu
-from handlers import other_handlers, user_handlers
+from handlers import other_handlers, user_handlers,del_menu_handler
 
 from aiogram.enums import ParseMode
 from aiogram.client.bot import DefaultBotProperties
@@ -33,6 +33,7 @@ async def main():
 
 
     # Регистриуем роутеры в диспетчере
+    dp.include_router(del_menu_handler.router)
     dp.include_router(user_handlers.router)
     dp.include_router(other_handlers.router)
 
